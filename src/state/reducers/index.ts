@@ -8,4 +8,4 @@ const reducers = combineReducers({
 
 export default reducer;
 
-export type RootState = ReturnType<typeof reducers>;
+export type RootState = ReturnType<typeof cellsReducer>;
