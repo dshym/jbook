@@ -6,7 +6,13 @@ import {
   DeleteCellAction,
   MoveCellAction,
   InsertCellAfterAction,
+  BundleStartAction,
+  BundleCompleteAction,
+  Action,
 } from '../actions';
+
+import bundle from '../../bundler';
+import { Dispatch } from 'react';
 
 export const updateCell = (id: string, content: string): UpdateCellAction => {
   return {
@@ -45,5 +51,26 @@ export const insertCellAfter = (
       id,
       type: cellType,
     },
+  };
+};
+
+export const createBundle = (cellId: string, input: string) => {
+  return async (dispatch: Dispatch<Action>) => {
+    dispatch({
+      type: ActionType.BUNDLE_START,
+      payload: {
+        cellId,
+      },
+    });
+
+    const resualt = await bundle(input);
+
+    dispatch({
+      type: ActionType.BUNDLE_COMPLETE,
+      payload: {
+        cellId,
+        bundle: resualt,
+      },
+    });
   };
 };
